@@ -1,2 +1,2 @@
 #!/bin/bash
-mv .TXT /tmp/u -a
+mv [[:upper:]]*  /tmp/u
