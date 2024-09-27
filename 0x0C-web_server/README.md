@@ -1,44 +1,67 @@
-# Web Servers
+# Web server
 
-A web server is a software application responsible for serving web content to clients over the internet. Its primary role is to handle incoming requests from clients (typically web browsers) and deliver the appropriate response, which could be a webpage, an image, a file download, or any other content hosted on the server.
+In this project, I learned how web servers work and began using one. I was
+provided a personal server by ALX. I learned how to use `scp`
+and Fabric to transfer files to my server. Additionally, I completed a basic
+configuration of the server using Nginx.
 
-### What is a child process
-A child process is a process that is spawned or created by another process, known as the parent process. Child processes inherit certain attributes and resources from their parent process but operate independently. In the context of web servers, child processes are often used to handle incoming client requests.
+The server is accessible at [bdbnb.site](http://bdbnb.site).
 
-### Why web servers usually have a parent process and child processes
-Web servers usually have a parent process and multiple child processes to handle incoming HTTP requests efficiently. The parent process manages the overall operation of the server, such as listening for incoming connections and spawning child processes as needed. Each child process is responsible for handling one or more client requests concurrently, allowing the server to serve multiple clients simultaneously.
+## Tasks :page_with_curl:
 
-### What are the main HTTP requests
-The main HTTP requests are:
+* **0. Transfer a file to your server**
+  * [0-transfer_file](./0-transfer_file): Bash script that transfers a file
+  from Holberton's client to a server.
+  * Accepts four arguments:
+    * The path of the file to be transferred.
+    * The IP of the server to transfer the file to.
+    * The username that `scp` connects with.
+    * The path of the SSH privtae key that `scp` uses.
+  * `scp` transfers the file to the user home directory `~/`.
 
-- GET: Requests data from a specified resource.
-- POST: Submits data to be processed to a specified resource.
-- PUT: Uploads a representation of a specified resource.
-- DELETE: Deletes the specified resource.
-- HEAD: Similar to GET but returns only the headers, not the actual data.
-- OPTIONS: Returns the HTTP methods that the server supports for a specified URL.
-- PATCH: Applies partial modifications to a resource.
+* **1. Install nginx web server**
+  * [1-install_nginx_web_server](./1-install_nginx_web_server): Bash script
+  that configures a new Ubuntu machine with Nginx.
+  * Nginx listens on port 80.
+  * When querying Nginx at its root `/` with a `curl` GET request,
+  it returns a page containing the string `Holberton School`.
 
-### How the web works
-The web works by clients (such as web browsers) sending HTTP requests to web servers, which then process these requests and return appropriate responses. These responses may include HTML documents, images, CSS files, JavaScript, or other resources necessary to render a web page in the client's browser.
+* **2. Setup a domain name**
+  * [2-setup_a_domain_name](./2-setup_a_domain_name): A text file containing
+  the domain name set up for the server through Gandi.
 
-### Nginx
-Nginx is a popular open-source web server and reverse proxy server. It's known for its high performance, stability, and low resource consumption. Nginx is often used as a front-end web server to serve static content or as a reverse proxy to forward requests to other web servers or applications.
+* **3. Redirection**
+  * [3-redirection](./3-redirection): Bash script that configures a new Ubuntu
+  machine with Nginx.
+  * Setup is identical to [1-install_nginx_web_server](./1-install_nginx_web_server)
+  plus:
+    * The location `/redirect_me` returns a `301 Moved Permanently` redirection
+    to another page.
 
-### How to Configure Nginx
-To configure Nginx, you typically modify its configuration file, which is usually located in the /etc/nginx directory on Linux systems. The configuration file contains directives that define how Nginx should handle incoming requests, manage server resources, and interact with upstream servers or applications.
+* **4. Not found page 404**
+  * [4-not_found_page_404](./4-not_found_page_404): Bash script that configures
+  a new Ubuntu machine with Nginx.
+  * Setup is identical to [1-install_nginx_web_server](./1-install_nginx_web_server)
+  plus:
+    * Features a custom 404 page containing the string `Ceci n'est pas une page`.
 
-### Root and sub domain
-Root and subdomains are part of the Domain Name System (DNS) hierarchy. The root domain is the highest level in the DNS hierarchy and is represented by a dot (.), while subdomains are subdivisions of the root domain. For example, in the domain example.com, "example" is the root domain, and "subdomain.example.com" is a subdomain.
+* **5. Design a beautiful 404 page**
+  * A custom-designed 404 error page for my server, accessible at
+  [bdbnb.site/404](http://bdbnb.site/404).
 
-### HTTP requests
-HTTP (Hypertext Transfer Protocol) requests are the foundation of data communication on the World Wide Web. They are messages sent by a client (such as a web browser) to a server, specifying an action to be performed. There are several types of HTTP requests, each serving a different purpose:
-
-### HTTP redirection
-HTTP redirection is the process of forwarding a web browser from one URL to another. It's commonly used for URL redirection, where a server responds to a request for a specific URL with a redirect response containing the new URL to which the client should navigate.
-
-### Not found HTTP response code
-The "404 Not Found" HTTP response code indicates that the server could not find the requested resource. It's returned when the requested URL is not available on the server.
-
-### Logs files on Linux
-Logs files on Linux are typically stored in the /var/log directory. Web servers like Nginx usually have their log files stored in this directory, with filenames such as access.log for recording HTTP requests and error.log for recording server errors and warnings. These log files are useful for troubleshooting server issues, monitoring traffic, and analyzing server performance.
+* **6. Deploy fast, deploy well**
+  * [fabfile.py](./fabfile.py): A Python Fabric configuration file defining
+  the following functions:
+  * `pack`
+    * Usage: `fabric pack`
+    * Creates a tar gzipped archive of the current directory named
+    `holbertonwebapp.tar.gz` in the local directory.
+  * `deploy`
+    * Usage: `fabric -H <remote server IP> deploy`
+    * Uploads the archive `holbertonwebapp.tar.gz` to the `/tmp`
+    directory of the remote server.
+    * Creates the directory `/tmp/holbertonwebapp` in the remote server.
+    * Untars `holbertonwebapp.tar.gz` in the `/tmp/holbertonwebapp` directory
+    of the remote server.
+  * `clean`
+    * Deletes the archive `holbertonwebapp.tar.gz` in the local directory.

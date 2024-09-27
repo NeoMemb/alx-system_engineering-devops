@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Configure nginx
 # sets up a new 404 error page
 sudo apt-get update
 sudo apt-get install -y nginx 
