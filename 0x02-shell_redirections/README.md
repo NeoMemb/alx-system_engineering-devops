@@ -1,1 +1,1 @@
-0x02-Shell redirection
+Learning the basics of Shell redirections
